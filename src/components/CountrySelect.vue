@@ -2,7 +2,7 @@
   <select
     @change="onChange()"
     v-model="selected"
-    class="form-select mt-10 mb-5 block w-full border p-3 rounded"
+    class="mt-10 mb-5 block w-4/5 border p-3 rounded mx-auto"
   >
     <option value="0">Select Country</option>
     <option v-for="countryName in countries" :key="countryName.ID" :value="countryName.ID">
@@ -23,7 +23,6 @@ export default {
   methods: {
     onChange() {
       const country = this.countries.find((item) => item.ID === this.selected);
-      console.log(country);
 
       this.$emit("getCountry", country);
     },

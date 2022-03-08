@@ -1,5 +1,5 @@
 <template>
-  <div class="grid md:grid-cols-2 gap-4">
+  <div class="grid sm:grid-cols-2 gap-4 mx-auto w-4/5">
     <!-- Box 1 -->
     <div class="shadow-md bg-black p-10 text-center rounded">
       <h3 class="text-3xl text-white font-bold mb-4">Cases</h3>
@@ -16,7 +16,7 @@
     </div>
 
     <!-- Box 2 -->
-    <div class="shadow-md bg-black p-10 text-center rounded">
+    <div class="shadow-md bg-red-500 p-10 text-center rounded">
       <h3 class="text-3xl text-white font-bold mb-4">Deaths</h3>
 
       <div class="text-2xl mb-4 text-white">

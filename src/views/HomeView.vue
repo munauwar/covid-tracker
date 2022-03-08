@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       loading: true,
-      title: "Global",
+      title: "Global cases",
       dataDate: "",
       stats: {},
       countries: [],
