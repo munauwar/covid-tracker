@@ -3,6 +3,7 @@
     <DataTitle :text="title" :dataDate="dataDate" />
     <CountrySelect @getCountry="getCountryData" :countries="countries" />
     <DataBoxes :stats="stats" />
+    <Graphs :data="data"/>
   </main>
 
   <main class="flex flex-col align-center justify-center text-center" v-else>
@@ -15,6 +16,8 @@
 import DataTitle from "@/components/DataTitle.vue";
 import DataBoxes from "@/components/DataBoxes.vue";
 import CountrySelect from "@/components/CountrySelect.vue";
+import Graphs from "@/components/Graphs.vue"
+import moment from 'moment'
 
 export default {
   name: "HomeView",
@@ -22,6 +25,7 @@ export default {
     DataTitle,
     DataBoxes,
     CountrySelect,
+    Graphs
   },
   data() {
     return {
@@ -30,6 +34,7 @@ export default {
       dataDate: "",
       stats: {},
       countries: [],
+      data: [{ name: 'Jan', pl: 1000 }],
       loadingImage: require("../assets/timer.gif"),
     };
   },
@@ -41,16 +46,22 @@ export default {
     },
 
     getCountryData(country) {
-        this.stats = country
-        this.title = country.Country
-    }
+      this.stats = country;
+      this.title = country.Country;
+    },
   },
   async created() {
     const data = await this.fetchApiData();
 
+    this.data = data.Countries.map(item => {
+        name: moment(item.Date).format("MMMM");
+        pl: item.NewDeaths;
+    }) 
+
     this.dataDate = data.Date;
     this.stats = data.Global;
     this.countries = data.Countries;
+    this.deaths = data.TotalDeaths;
     this.loading = false;
   },
 };
