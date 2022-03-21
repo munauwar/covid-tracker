@@ -1,24 +1,29 @@
 <template>
   <Chart
-    :size="{ width: 500, height: 420 }"
-    :data="dataGraph"
+    :size="{ width: 500, height: 400 }"
+    :data="data"
     :margin="margin"
-    :direction="direction"
-    :axis="axis">
+    :direction="direction">
+
+    <template #layers>
+      <Grid strokeDasharray="2,2" />
+      <Bar :dataKeys="['barName1', 'barValue1']" :barStyle="{fill: '#90e0ef'}" />
+      <Bar :dataKeys="['barName2', 'barValue2']" :barStyle="{fill: '#70e0ef'}" />
+    </template>
 
   </Chart>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { Chart, Grid, Line } from 'vue3-charts'
+import { Chart, Grid, Bar } from 'vue3-charts'
 
 export default defineComponent({
   name: 'Graphs',
-  props: ["dataGraph"],
-  components: { Chart, Grid, Line },
+  props: ['data'],
+  components: { Chart, Grid, Bar },
   setup() {
-    // const data = ref(plByMonth)
+    // const data = ref(data)
     const direction = ref('horizontal')
     const margin = ref({
       left: 0,
@@ -27,18 +32,7 @@ export default defineComponent({
       bottom: 0
     })
 
-    const axis = ref({
-      primary: {
-        type: 'band'
-      },
-      secondary: {
-        domain: ['dataMin', 'dataMax + 100'],
-        type: 'linear',
-        ticks: 8
-      }
-    })
-
-    return { direction, margin, axis }
+    return { direction, margin }
   }
 })
 </script>

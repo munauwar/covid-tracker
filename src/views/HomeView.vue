@@ -3,7 +3,7 @@
     <DataTitle :text="title" :dataDate="dataDate" />
     <CountrySelect @getCountry="getCountryData" :countries="countries" />
     <DataBoxes :stats="stats" />
-    <Graphs :data="dataGraph"/>
+    <Graphs :data="dataGraph" class="w-1/2 mx-auto"/>
   </main>
 
   <main class="flex flex-col align-center justify-center text-center" v-else>
@@ -17,7 +17,6 @@ import DataTitle from "@/components/DataTitle.vue";
 import DataBoxes from "@/components/DataBoxes.vue";
 import CountrySelect from "@/components/CountrySelect.vue";
 import Graphs from "@/components/Graphs.vue"
-import moment from 'moment'
 
 export default {
   name: "HomeView",
@@ -34,7 +33,12 @@ export default {
       dataDate: "",
       stats: {},
       countries: [],
-      dataGraph: [{ name: "Deaths", pl: 1000}],
+      dataGraph: [{ 
+        barName1: "Total Deaths",
+        barValue1: 0,
+        barName2: "Total confirmed cases",
+        barValue2: 0,
+      }],
       loadingImage: require("../assets/timer.gif"),
     };
   },
@@ -48,20 +52,22 @@ export default {
     getCountryData(country) {
       this.stats = country;
       this.title = country.Country;
+      this.dataGraph = [{
+        barName1: "Total Deaths", 
+        barValue1: country.TotalDeaths,
+        barName2: "Total confirmed cases",
+        barValue2: country.TotalConfirmed
+      }];
     },
   },
   async created() {
     const data = await this.fetchApiData();
 
-    this.data = data.Countries.map(item => {
-        name: moment(item.Date).format("MMMM");
-        pl: item.NewDeaths;
-    }) 
-
     this.dataDate = data.Date;
     this.stats = data.Global;
     this.countries = data.Countries;
-    this.deaths = data.TotalDeaths;
+    this.dataGraph.barValue1 = data.Global.TotalDeaths;
+    this.dataGraph.barValue2 = data.Countries.TotalConfirmed;
     this.loading = false;
   },
 };
