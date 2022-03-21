@@ -1,14 +1,10 @@
 <template>
   <Chart
-    :size="{ width: 500, height: 400 }"
-    :data="data"
+    :size="{ width: 500, height: 420 }"
+    :data="dataGraph"
     :margin="margin"
-    :direction="direction">
-
-    <template #layers>
-      <Grid strokeDasharray="2,2" />
-      <Line :dataKeys="['name', 'pl']" />
-    </template>
+    :direction="direction"
+    :axis="axis">
 
   </Chart>
 </template>
@@ -18,11 +14,11 @@ import { defineComponent, ref } from 'vue'
 import { Chart, Grid, Line } from 'vue3-charts'
 
 export default defineComponent({
-  name: 'LineChart',
-  props: ['data'],
+  name: 'Graphs',
+  props: ["dataGraph"],
   components: { Chart, Grid, Line },
   setup() {
-    // const data = ref(data)
+    // const data = ref(plByMonth)
     const direction = ref('horizontal')
     const margin = ref({
       left: 0,
@@ -31,7 +27,18 @@ export default defineComponent({
       bottom: 0
     })
 
-    return { direction, margin }
+    const axis = ref({
+      primary: {
+        type: 'band'
+      },
+      secondary: {
+        domain: ['dataMin', 'dataMax + 100'],
+        type: 'linear',
+        ticks: 8
+      }
+    })
+
+    return { direction, margin, axis }
   }
 })
 </script>

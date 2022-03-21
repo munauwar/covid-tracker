@@ -3,7 +3,7 @@
     <DataTitle :text="title" :dataDate="dataDate" />
     <CountrySelect @getCountry="getCountryData" :countries="countries" />
     <DataBoxes :stats="stats" />
-    <Graphs :data="data"/>
+    <Graphs :data="dataGraph"/>
   </main>
 
   <main class="flex flex-col align-center justify-center text-center" v-else>
@@ -34,7 +34,7 @@ export default {
       dataDate: "",
       stats: {},
       countries: [],
-      data: [{ name: 'Jan', pl: 1000 }],
+      dataGraph: [{ name: "Deaths", pl: 1000}],
       loadingImage: require("../assets/timer.gif"),
     };
   },
